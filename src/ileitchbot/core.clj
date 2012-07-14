@@ -14,6 +14,5 @@
   (def last-check (from-long (now))))
 
 (defn -main []
-  (tweet-new-issues))
-  ; (def pool (mk-pool))
-  ; (every frequency tweet-new-issues pool))
+  (def pool (mk-pool))
+  (every frequency tweet-new-issues pool))

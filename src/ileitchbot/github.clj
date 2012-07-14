@@ -26,5 +26,5 @@
 
 (defn new-issues [last-check]
   (let [all-issues (read-json (issues-json))]
-    (let [new-issues (filter '(new-issue? % last-check) all-issues)]
-      (doseq [issue new-issues] (format-issue issue)))))
+    (let [new-issues (filter #(new-issue? % last-check) all-issues)]
+      (for [issue new-issues] (format-issue issue)))))
