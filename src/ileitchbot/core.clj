@@ -6,7 +6,7 @@
      'clj-time.coerce)
 
 (def ileitch "@ileitch")
-(def frequency 10000)
+(def frequency 60000)
 (def last-check (from-long (now)))
 
 (defn tweet-new-issues []
