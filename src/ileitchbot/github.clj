@@ -11,20 +11,19 @@
 (def parameters {:access_token github-api-token :filter "subscribed" :state "open"})
 (def date-formatter (formatters :date-time-no-ms))
 
-(defn issues-json []
+(defn all-issues []
   (with-open [client (http/create-client)]
   (let [response (http/GET client issues-url :query parameters)]
-    (http/string (http/await response)))))
+    (read-json (http/string (http/await response))))))
 
 (defn format-issue [issue]
   (let [title (:title issue) repo (:name (:repository issue)) url (:html_url issue)]
-    (str "(" repo ") " title " " url)))
+    (format "(%s) %s %s" repo title url)))
 
 (defn new-issue? [issue last-check]
   (let [created-at (parse date-formatter (:created_at issue))]
     (after? created-at last-check)))
 
 (defn new-issues [last-check]
-  (let [all-issues (read-json (issues-json))]
-    (let [new-issues (filter #(new-issue? % last-check) all-issues)]
-      (for [issue new-issues] (format-issue issue)))))
+  (let [issues (filter #(new-issue? % last-check) (all-issues))]
+    (for [issue issues] (format-issue issue))))

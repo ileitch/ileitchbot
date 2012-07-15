@@ -15,4 +15,4 @@
   (twitter/with-oauth oauth-consumer
                     oauth-access-token
                     oauth-access-token-secret
-                    (twitter/update-status (str user " " message))))
+                    (twitter/update-status (str user " " message)))))
